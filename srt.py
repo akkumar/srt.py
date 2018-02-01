@@ -42,7 +42,7 @@ def tc2ms(tc):
     try: 
         assert match is not None
     except AssertionError:
-        print tc
+        print('%s' % tc)
     hh,mm,ss,ms = map(lambda x: 0 if x==None else int(x), match.groups())
     return ((hh*3600 + mm*60 + ss) * 1000 + ms) * sign
 
@@ -175,19 +175,19 @@ def split_cmd(*args):
     A trailing substream is assumed if it is not empty
     '''
     if len(args) < 2:
-        print 'Usage: split input_file.srt 00:12:33,999 00:25:12,500'
+        print('Usage: split input_file.srt 00:12:33,999 00:25:12,500')
     else:
         infile  = args[0]
         tcs     = args[1:]
         segs= split(parse(infile), *map(TC, tcs))
-        print 'Splitting at %s' % ', '.join(map(str, map(TC, tcs)))
+        print('Splitting at %s' % ', '.join(map(str, map(TC, tcs))))
         for (no, seg) in zip(count(), segs):
             open('%s.%03d'%(infile, no), 'wb').write(format(seg))
 
 
 def shift_cmd(*args):
     if len(args) != 2:
-        print 'Usage: shift input_file.srt delta'
+        print('Usage: shift input_file.srt delta')
     else:
         infile  = args[0]
         delta   = args[1]
@@ -201,7 +201,7 @@ def command_run(argv):
     if len(argv) > 1 and argv[1] in cmds:
         cmds[argv[1]](*argv[2:])
     else:
-        print 'Usage: %s [ %s ]' % (argv[0], ' | '.join(cmds))
+        print('Usage: %s [ %s ]' % (argv[0], ' | '.join(cmds)))
 
 
 if __name__ == '__main__':
